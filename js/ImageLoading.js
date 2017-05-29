@@ -34,17 +34,6 @@ var dayImageList = [
   {trackType:TRACK_GRASS, theFile:"track_grass_day.png"},
   {trackType:TRACK_OIL, theFile:"track_oil_day.png"}
   ];
-var nightImageList = [
-  {varName:carPic, theFile:"player1_night.png"},
-  {varName:car2Pic, theFile:"player2_night.png"},
-  {trackType:TRACK_ROAD, theFile:"track_road_night.png"},
-  {trackType:TRACK_WALL, theFile:"track_wall_night.png"},
-  {trackType:TRACK_GOAL, theFile:"track_goal_night.png"},
-  {trackType:TRACK_TREE, theFile:"track_treeWall_night.png"},
-  {trackType:TRACK_FLAG, theFile:"track_flagWall_night.png"},
-  {trackType:TRACK_GRASS, theFile:"track_grass_night.png"},
-  {trackType:TRACK_OIL, theFile:"track_oil_night.png"}
-  ];
 
 picsToLoad = dayImageList.length;
 
@@ -57,3 +46,29 @@ for(var i=0;i<dayImageList.length;i++) {
 } // end of for dayImageList
 
 } // end of function loadImages
+function switchTheme(){
+	var nightImageList = [
+	  {varName:carPic, theFile:"player1_night.png"},
+	  {varName:car2Pic, theFile:"player2_night.png"},
+	  {trackType:TRACK_ROAD, theFile:"track_road_night.png"},
+	  {trackType:TRACK_WALL, theFile:"track_wall_night.png"},
+	  {trackType:TRACK_GOAL, theFile:"track_goal_night.png"},
+	  {trackType:TRACK_TREE, theFile:"track_treeWall_night.png"},
+	  {trackType:TRACK_FLAG, theFile:"track_flagWall_night.png"},
+	  {trackType:TRACK_GRASS, theFile:"track_grass_night.png"},
+	  {trackType:TRACK_OIL, theFile:"track_oil_night.png"}
+	  ];
+	if(sunOut == true){
+		for(var i=0;i<nightImageList.length;i++) {
+		  if(nightImageList[i].trackType != undefined) {
+			loadImageForTrackCode(nightImageList[i].trackType, nightImageList[i].theFile);
+		  } else {
+			beginLoadingImage(nightImageList[i].varName, nightImageList[i].theFile);
+		  } // end of else
+		} // end of for nightImageList
+	}
+	else {
+		loadImages();
+	}
+	sunOut != sunOut;
+}

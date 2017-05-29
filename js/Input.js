@@ -32,6 +32,9 @@ function setKeyHoldState(thisKey, thisCar, setTo) { // added thisCar variable
 }
 
 function keyPressed(evt) {
+	if(evt.keyCode == 84){
+		switchTheme();
+	}
   setKeyHoldState(evt.keyCode, p1, true);
   setKeyHoldState(evt.keyCode, p2, true);
   evt.preventDefault(); // without this, arrow keys scroll the browser!
