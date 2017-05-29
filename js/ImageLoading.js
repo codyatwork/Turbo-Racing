@@ -23,7 +23,7 @@ function loadImageForTrackCode(trackCode, fileName) {
 
 function loadImages() {
 
-var imageList = [
+var dayImageList = [
   {varName:carPic, theFile:"player1.png"},
   {varName:car2Pic, theFile:"player2.png"},
   {trackType:TRACK_ROAD, theFile:"track_road.png"},
@@ -34,15 +34,26 @@ var imageList = [
   {trackType:TRACK_GRASS, theFile:"track_grass_day.png"},
   {trackType:TRACK_OIL, theFile:"track_oil_day.png"}
   ];
+var nightImageList = [
+  {varName:carPic, theFile:"player1_night.png"},
+  {varName:car2Pic, theFile:"player2_night.png"},
+  {trackType:TRACK_ROAD, theFile:"track_road_night.png"},
+  {trackType:TRACK_WALL, theFile:"track_wall_night.png"},
+  {trackType:TRACK_GOAL, theFile:"track_goal_night.png"},
+  {trackType:TRACK_TREE, theFile:"track_treeWall_night.png"},
+  {trackType:TRACK_FLAG, theFile:"track_flagWall_night.png"},
+  {trackType:TRACK_GRASS, theFile:"track_grass_night.png"},
+  {trackType:TRACK_OIL, theFile:"track_oil_night.png"}
+  ];
 
-picsToLoad = imageList.length;
+picsToLoad = dayImageList.length;
 
-for(var i=0;i<imageList.length;i++) {
-  if(imageList[i].trackType != undefined) {
-    loadImageForTrackCode(imageList[i].trackType, imageList[i].theFile);
+for(var i=0;i<dayImageList.length;i++) {
+  if(dayImageList[i].trackType != undefined) {
+    loadImageForTrackCode(dayImageList[i].trackType, dayImageList[i].theFile);
   } else {
-    beginLoadingImage(imageList[i].varName, imageList[i].theFile);
+    beginLoadingImage(dayImageList[i].varName, dayImageList[i].theFile);
   } // end of else
-} // end of for imageList
+} // end of for dayImageList
 
 } // end of function loadImages
