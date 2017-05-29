@@ -33,7 +33,12 @@ function setKeyHoldState(thisKey, thisCar, setTo) { // added thisCar variable
 
 function keyPressed(evt) {
     if (evt.keyCode == 84) {
-        switchTheme();
+    	if(sunOut){
+        	loadNightImages();
+        }
+        else{
+        	loadDayImages();
+        }
     }
     setKeyHoldState(evt.keyCode, p1, true);
     setKeyHoldState(evt.keyCode, p2, true);

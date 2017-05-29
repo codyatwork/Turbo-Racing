@@ -27,7 +27,7 @@ const TRACK_TREE = 4;
 const TRACK_FLAG = 5;
 const TRACK_GRASS = 6;
 const TRACK_OIL = 7;
-var sunOut = true;
+var sunOut;
 
 function trackTileToIndex(tileCol, tileRow) {
     return (tileCol + TRACK_COLS * tileRow);

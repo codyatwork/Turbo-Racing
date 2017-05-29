@@ -21,7 +21,7 @@ function loadImageForTrackCode(trackCode, fileName) {
     beginLoadingImage(trackPics[trackCode], fileName);
 }
 
-function loadImages() {
+function loadDayImages() {
 
     var dayImageList = [{
             varName: carPic,
@@ -70,9 +70,10 @@ function loadImages() {
             beginLoadingImage(dayImageList[i].varName, dayImageList[i].theFile);
         } // end of else
     } // end of for dayImageList
+    sunOut = true;
 
 } // end of function loadImages
-function switchTheme() {
+function loadNightImages() {
     var nightImageList = [{
             varName: carPic,
             theFile: "player1_night.png"
@@ -110,7 +111,6 @@ function switchTheme() {
             theFile: "track_oil_night.png"
         }
     ];
-    if (sunOut == true) {
         for (var i = 0; i < nightImageList.length; i++) {
             if (nightImageList[i].trackType != undefined) {
                 loadImageForTrackCode(nightImageList[i].trackType, nightImageList[i].theFile);
@@ -118,8 +118,5 @@ function switchTheme() {
                 beginLoadingImage(nightImageList[i].varName, nightImageList[i].theFile);
             } // end of else
         } // end of for nightImageList
-    } else {
-        loadImages();
-    }
-    sunOut != sunOut;
+    sunOut = false;
 }
