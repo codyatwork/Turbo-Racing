@@ -111,12 +111,13 @@ function loadNightImages() {
             theFile: "track_oil_night.png"
         }
     ];
-        for (var i = 0; i < nightImageList.length; i++) {
-            if (nightImageList[i].trackType != undefined) {
-                loadImageForTrackCode(nightImageList[i].trackType, nightImageList[i].theFile);
-            } else {
-                beginLoadingImage(nightImageList[i].varName, nightImageList[i].theFile);
-            } // end of else
-        } // end of for nightImageList
+    picsToLoad = nightImageList.length;
+    for (var i = 0; i < nightImageList.length; i++) {
+        if (nightImageList[i].trackType != undefined) {
+            loadImageForTrackCode(nightImageList[i].trackType, nightImageList[i].theFile);
+        } else {
+            beginLoadingImage(nightImageList[i].varName, nightImageList[i].theFile);
+        } // end of else
+    } // end of for nightImageList
     sunOut = false;
 }
