@@ -3,6 +3,7 @@ var canvas, canvasContext;
 
 var p1 = new carClass();
 var p2 = new carClass();
+var firstTime = true;
 window.onload = function() {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');

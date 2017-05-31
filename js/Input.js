@@ -39,6 +39,7 @@ function keyPressed(evt) {
         else{
         	loadDayImages();
         }
+        firstTime = false;
     }
     setKeyHoldState(evt.keyCode, p1, true);
     setKeyHoldState(evt.keyCode, p2, true);
