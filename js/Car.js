@@ -72,6 +72,7 @@ function carClass() {
         var nextY = this.carY + Math.sin(this.carAng) * this.carSpeed;
 
         var drivingIntoTileType = getTrackAtPixelCoord(nextX, nextY);
+        isCarAtPixelCoord(this, this.carX, this.carY);
 
         if (drivingIntoTileType == TRACK_ROAD) {
             this.carX = nextX;

@@ -26,6 +26,9 @@ function loadingDoneSoStartGame() {
 function moveEverything() {
     p1.carMove();
     p2.carMove();
+    if((p1.carX > p2.carX - 10 && p1.carX < p2.carX + 10) && (p1.carY > p2.carY - 10 && p1.carY < p2.carY + 10)){
+    	//TODO nudge the cars apart
+    }
 }
 
 function drawEverything() {
@@ -33,4 +36,17 @@ function drawEverything() {
 
     p1.carDraw();
     p2.carDraw();
+}
+
+function isCarAtPixelCoord(myCar, pixelX, pixelY) {
+	var whatCar;
+	if(myCar==p1){
+		whatCar=p2;
+	}
+	else{
+		whatCar=p1;
+	}
+    if((pixelX > whatCar.carX - 10 && pixelX < whatCar.carX + 10) && (pixelY > whatCar.carY - 10 && pixelY < whatCar.carY + 10)){
+    	myCar.carSpeed = myCar.carSpeed * -1.5;
+    }
 }
