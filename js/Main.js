@@ -21,6 +21,7 @@ function loadingDoneSoStartGame() {
     setInterval(function() {
         moveEverything();
         drawEverything();
+        nitroCount();
     }, 1000 / framesPerSecond);
     p2.carInit(car2Pic, "Green Car");
     p1.carInit(carPic, "Blue Car");
@@ -98,4 +99,12 @@ function pad(num, size) {
 function resetTime(){
 	startTime = new Date;
 	start_ms = startTime.getTime();
+}
+function nitroCount(){
+	if(p1.countingNitro){
+		p1.nitroCount--;
+	}
+	if(p2.countingNitro){
+		p2.nitroCount--;
+	}
 }
