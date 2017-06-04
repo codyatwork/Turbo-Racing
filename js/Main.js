@@ -6,8 +6,8 @@ var p2 = new carClass();
 var firstTime = true;
 var speedBuffer = false;
 var computerCar = true;
-var startTime = new Date;
-var start_ms = startTime.getTime();
+var startTime;
+var start_ms;
 window.onload = function() {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
@@ -94,4 +94,8 @@ function moveComputer(){
 function pad(num, size) {
     var s = "000000000" + num;
     return s.substr(s.length-size);
+}
+function resetTime(){
+	startTime = new Date;
+	start_ms = startTime.getTime();
 }
