@@ -5,6 +5,9 @@ var p1 = new carClass();
 var p2 = new carClass();
 var firstTime = true;
 var speedBuffer = false;
+var computerCar = true;
+var startTime;
+var start_ms;
 window.onload = function() {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
@@ -22,6 +25,11 @@ function loadingDoneSoStartGame() {
     p2.carInit(car2Pic, "Green Car");
     p1.carInit(carPic, "Blue Car");
     initInput();
+	setInterval(function() {
+		if(computerCar){
+			moveComputer();
+		}
+	}, 2000);
 }
 
 function moveEverything() {
@@ -34,9 +42,17 @@ function moveEverything() {
 
 function drawEverything() {
     drawTracks();
-
     p1.carDraw();
     p2.carDraw();
+    var nowTime = new Date;
+    var now_ms = nowTime.getTime();
+    var difference_ms = now_ms - start_ms;
+    var minutes = pad(Math.floor(difference_ms / 60000), 2);
+    var seconds = pad(((difference_ms % 60000) / 1000).toFixed(1), 4);
+    var raceTime = minutes + ":" + seconds;
+    canvasContext.font="30px Verdana";
+    canvasContext.fillStyle = 'blue';
+    canvasContext.fillText(raceTime, canvas.width-130, 30);
 }
 
 function isCarAtPixelCoord(myCar, pixelX, pixelY) {
@@ -56,4 +72,30 @@ function isCarAtPixelCoord(myCar, pixelX, pixelY) {
     else{
     	speedBuffer=false;
     }
+}
+
+function moveComputer(){
+	var randomKey = Math.floor((Math.random() * 4) + 1);
+	switch(randomKey){
+		case 1:
+			p2.keyHeld_Gas = !p2.keyHeld_Gas;
+			break;
+		case 2:
+    		p2.keyHeld_Reverse = !p2.keyHeld_Reverse;
+    		break;
+    	case 3:
+    		p2.keyHeld_TurnLeft = !p2.keyHeld_TurnLeft;
+    		break;
+    	case 4:
+    		p2.keyHeld_TurnRight = !p2.keyHeld_TurnRight;
+    		break;
+    }
+}
+function pad(num, size) {
+    var s = "000000000" + num;
+    return s.substr(s.length-size);
+}
+function resetTime(){
+	startTime = new Date;
+	start_ms = startTime.getTime();
 }

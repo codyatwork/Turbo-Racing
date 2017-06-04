@@ -47,6 +47,7 @@ function carClass() {
         } // end of if car position not saved yet
         this.carX = this.homeX;
         this.carY = this.homeY;
+        resetTime();
     } // end of carReset
 
     this.carMove = function() {
