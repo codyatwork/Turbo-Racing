@@ -6,6 +6,8 @@ var p2 = new carClass();
 var firstTime = true;
 var speedBuffer = false;
 var computerCar = true;
+var startTime = new Date;
+var start_ms = startTime.getTime();
 window.onload = function() {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
@@ -40,9 +42,17 @@ function moveEverything() {
 
 function drawEverything() {
     drawTracks();
-
     p1.carDraw();
     p2.carDraw();
+    var nowTime = new Date;
+    var now_ms = nowTime.getTime();
+    var difference_ms = now_ms - start_ms;
+    var minutes = pad(Math.floor(difference_ms / 60000), 2);
+    var seconds = pad(((difference_ms % 60000) / 1000).toFixed(1), 4);
+    var raceTime = minutes + ":" + seconds;
+    canvasContext.font="30px Verdana";
+    canvasContext.fillStyle = 'blue';
+    canvasContext.fillText(raceTime, canvas.width-130, 30);
 }
 
 function isCarAtPixelCoord(myCar, pixelX, pixelY) {
@@ -80,4 +90,8 @@ function moveComputer(){
     		p2.keyHeld_TurnRight = !p2.keyHeld_TurnRight;
     		break;
     }
+}
+function pad(num, size) {
+    var s = "000000000" + num;
+    return s.substr(s.length-size);
 }
