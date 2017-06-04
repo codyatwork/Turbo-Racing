@@ -4,6 +4,7 @@ var canvas, canvasContext;
 var p1 = new carClass();
 var p2 = new carClass();
 var firstTime = true;
+var speedBuffer = false;
 window.onload = function() {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
@@ -46,7 +47,13 @@ function isCarAtPixelCoord(myCar, pixelX, pixelY) {
 	else{
 		whatCar=p1;
 	}
-    if((pixelX > whatCar.carX - 10 && pixelX < whatCar.carX + 10) && (pixelY > whatCar.carY - 10 && pixelY < whatCar.carY + 10)){
-    	myCar.carSpeed = myCar.carSpeed * -1.5;
+    if((pixelX > whatCar.carX - 21 && pixelX < whatCar.carX + 21) && (pixelY > whatCar.carY - 21 && pixelY < whatCar.carY + 21)){
+    	if(!speedBuffer){
+    		myCar.carSpeed = myCar.carSpeed * -1.5;
+    		speedBuffer=true;
+    	}
+    }
+    else{
+    	speedBuffer=false;
     }
 }
