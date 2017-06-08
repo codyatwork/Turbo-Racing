@@ -109,18 +109,18 @@ function carClass() {
     	if (this.hasNitro) {
     		this.nitroSpeed = this.carSpeed * 2;
     		this.speedCopy = this.carSpeed;
-    		this.nitroCounter();
-    		while(this.nitroCount>0){
+    		var refreshIntervalId = setInterval(function() {
     			this.carSpeed = this.nitroSpeed;
-    		}
-    		clearInterval(refreshIntervalId);
-    		this.carSpeed = this.speedCopy;
-    		this.hasNitro = false;
+				this.nitroCount--;
+				if(this.nitroCount==0){
+					this.endNitro();
+				}
+			}, 1000 / FRAMES_PER_SECOND);
     	}
     }
-    this.nitroCounter = function(){
-		var refreshIntervalId = setInterval(function() {
-			this.nitroCount--;
-		}, 1000 / FRAMES_PER_SECOND);
+    this.endNitro = function(){
+		clearInterval(refreshIntervalId);
+		this.carSpeed = this.speedCopy;
+    	this.hasNitro = false;
 	}
 } // end of car class
