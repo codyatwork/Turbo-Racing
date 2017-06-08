@@ -109,13 +109,18 @@ function carClass() {
     	if (this.hasNitro) {
     		this.nitroSpeed = this.carSpeed * 2;
     		this.speedCopy = this.carSpeed;
-    		this.countingNitro = true;
+    		this.nitroCounter();
     		while(this.nitroCount>0){
     			this.carSpeed = this.nitroSpeed;
     		}
-    		this.countingNitro = false;
+    		clearInterval(refreshIntervalId);
     		this.carSpeed = this.speedCopy;
     		this.hasNitro = false;
     	}
     }
+    this.nitroCounter = function(){
+		var refreshIntervalId = setInterval(function() {
+			this.nitroCount--;
+		}, 1000 / FRAMES_PER_SECOND);
+	}
 } // end of car class
