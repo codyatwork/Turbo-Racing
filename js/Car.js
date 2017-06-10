@@ -4,6 +4,7 @@ const DRIVE_POWER = 0.5;
 const REVERSE_POWER = 0.2;
 const TURN_RATE = 0.03;
 const MIN_TURN_SPEED = 0.5;
+const NITRO_TIME = 20;
 
 function carClass() {
     // variables to keep track of car position
@@ -15,6 +16,8 @@ function carClass() {
     this.keyHeld_Reverse = false;
     this.keyHeld_TurnLeft = false;
     this.keyHeld_TurnRight = false;
+    
+	this.nitroCount = 0;
 
     // key controls used for this car 
     this.setupControls = function(forwardKey, backKey, leftKey, rightKey) {
@@ -48,6 +51,7 @@ function carClass() {
         this.carX = this.homeX;
         this.carY = this.homeY;
         resetTime();
+        this.hasNitro = true;
     } // end of carReset
 
     this.carMove = function() {
@@ -68,7 +72,15 @@ function carClass() {
         if (this.keyHeld_Reverse) {
             this.carSpeed -= REVERSE_POWER;
         }
-
+		if ( this.nitroCount > 1)
+		{
+		  this.nitroCount--;
+		  this.carSpeed = this.nitroSpeed;
+		}
+		else if (this.nitroCount == 1) {
+			this.carSpeed = this.carSpeed/2;
+			this.nitroCount--;
+		}
         var nextX = this.carX + Math.cos(this.carAng) * this.carSpeed;
         var nextY = this.carY + Math.sin(this.carAng) * this.carSpeed;
 
@@ -101,5 +113,12 @@ function carClass() {
     this.carDraw = function() {
         drawBitmapCenteredAtLocationWithRotation(this.myBitmap, this.carX, this.carY, this.carAng);
     }
-
+    this.nitro = function() {
+    	if (this.hasNitro) {
+    		this.nitroCount = NITRO_TIME;
+    		this.hasNitro = false;
+    		this.speedCopy = this.carSpeed;
+    		this.nitroSpeed = this.carSpeed * 2;
+    	}
+    }
 } // end of car class

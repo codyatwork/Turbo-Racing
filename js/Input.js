@@ -43,6 +43,16 @@ function keyPressed(evt) {
     }
     else if (evt.keyCode == 67) {
     	computerCar = !computerCar;
+    	p2.keyHeld_Gas = false;
+		p2.keyHeld_Reverse = false;
+		p2.keyHeld_TurnLeft = false;
+		p2.keyHeld_TurnRight = false;
+    }
+    else if (evt.keyCode == 18) {
+    	p1.nitro();
+    }
+    else if (evt.keyCode == 32) {
+    	p2.nitro();
     }
     setKeyHoldState(evt.keyCode, p1, true);
     setKeyHoldState(evt.keyCode, p2, true);
