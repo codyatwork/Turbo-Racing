@@ -19,6 +19,22 @@ var trackGrid = [4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
     0, 3, 0, 0, 0, 0, 1, 4, 4, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1,
     1, 1, 5, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1
 ];
+var trackGrid2 = [4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
+				4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1,
+				1, 0, 0, 1, 1, 1, 1, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 0, 0, 1,
+				1, 0, 0, 1, 1, 6, 6, 1, 4, 4, 1, 1, 6, 6, 6, 1, 1, 0, 0, 1,
+				1, 0, 0, 1, 6, 0, 0, 0, 1, 4, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+				1, 0, 0, 1, 0, 0, 0, 0, 7, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+				1, 2, 2, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 5, 0, 0, 1, 0, 0, 1,
+				1, 0, 0, 1, 0, 0, 5, 0, 0, 0, 5, 0, 0, 1, 0, 0, 1, 6, 6, 1,
+				1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 5, 0, 0, 1,
+				1, 1, 5, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+				0, 3, 0, 0, 5, 0, 1, 4, 1, 1, 6, 6, 1, 1, 0, 0, 0, 0, 0, 1,
+				0, 3, 0, 0, 0, 0, 1, 4, 4, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1,
+				1, 1, 5, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1
+];
 const TRACK_ROAD = 0;
 const TRACK_WALL = 1;
 const TRACK_PLAYER = 2;
@@ -51,7 +67,7 @@ function getTrackAtPixelCoord(pixelX, pixelY) {
     return (trackGrid[trackIndex]);
 }
 
-function drawTracks() {
+function drawTracks(array) {
     var trackIndex = 0;
     var trackLeftEdgeX = 0;
     var trackTopEdgeY = 0;
@@ -62,7 +78,7 @@ function drawTracks() {
 
         for (var eachCol = 0; eachCol < TRACK_COLS; eachCol++) { // left to right in each row
 
-            var trackTypeHere = trackGrid[trackIndex]; // getting the track code for this tile        
+            var trackTypeHere = array[trackIndex]; // getting the track code for this tile        
             canvasContext.drawImage(trackPics[trackTypeHere], trackLeftEdgeX, trackTopEdgeY);
 
             trackIndex++; // increment which index we're going to next check for in the track        
@@ -74,3 +90,13 @@ function drawTracks() {
 
     } // end of for eachRow    
 } // end of drawTracks()
+function switchTrack() {
+	if(activeTrack==1){
+		drawTracks(trackGrid2);
+		activeTrack=2;
+	}
+	else {
+		drawTracks(trackGrid);
+		activeTrack=1;
+	}
+}

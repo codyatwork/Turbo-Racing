@@ -8,6 +8,7 @@ var speedBuffer = false;
 var computerCar = true;
 var startTime;
 var start_ms;
+var activeTrack = 1;
 const FRAMES_PER_SECOND = 30;
 window.onload = function() {
     canvas = document.getElementById('gameCanvas');
@@ -38,7 +39,7 @@ function moveEverything() {
 }
 
 function drawEverything() {
-    drawTracks();
+    drawTracks(trackGrid);
     p1.carDraw();
     p2.carDraw();
     var nowTime = new Date;
