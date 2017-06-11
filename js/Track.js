@@ -91,12 +91,14 @@ function drawTracks(array) {
     } // end of for eachRow    
 } // end of drawTracks()
 function switchTrack() {
-	if(activeTrack==1){
+	if(activeTrack==trackGrid){
+		p1.carReset(trackGrid2);
+		p2.carReset(trackGrid2);
 		drawTracks(trackGrid2);
-		activeTrack=2;
+		activeTrack=trackGrid2;
 	}
 	else {
 		drawTracks(trackGrid);
-		activeTrack=1;
+		activeTrack=trackGrid;
 	}
 }

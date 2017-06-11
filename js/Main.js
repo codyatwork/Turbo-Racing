@@ -8,7 +8,7 @@ var speedBuffer = false;
 var computerCar = true;
 var startTime;
 var start_ms;
-var activeTrack = 1;
+var activeTrack = trackGrid;
 const FRAMES_PER_SECOND = 30;
 window.onload = function() {
     canvas = document.getElementById('gameCanvas');
