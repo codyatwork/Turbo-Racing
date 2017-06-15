@@ -39,7 +39,7 @@ function moveEverything() {
 }
 
 function drawEverything() {
-    drawTracks(trackGrid);
+    drawTracks(activeTrack);
     p1.carDraw();
     p2.carDraw();
     var nowTime = new Date;

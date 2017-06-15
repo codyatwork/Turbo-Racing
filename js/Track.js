@@ -64,7 +64,7 @@ function getTrackAtPixelCoord(pixelX, pixelY) {
     }
 
     var trackIndex = trackTileToIndex(tileCol, tileRow);
-    return (trackGrid[trackIndex]);
+    return (activeTrack[trackIndex]);
 }
 
 function drawTracks(array) {
