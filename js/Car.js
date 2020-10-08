@@ -6,41 +6,49 @@ const TURN_RATE = 0.03;
 const MIN_TURN_SPEED = 0.5;
 const NITRO_TIME = 20;
 
-function carClass() {
-    // variables to keep track of car position
-    this.carX = 75;
-    this.carY = 75;
+class Car {
+    constructor() {
+        // variables to keep track of car position
+        this.x = 75;
+        this.y = 75;
 
-    // keyboard hold state variables, to use keys more like buttons
-    this.keyHeld_Gas = false;
-    this.keyHeld_Reverse = false;
-    this.keyHeld_TurnLeft = false;
-    this.keyHeld_TurnRight = false;
-    
-	this.nitroCount = 0;
+        // keyboard hold state variables, to use keys more like buttons
+        this.keyHeld_Gas = false;
+        this.keyHeld_Reverse = false;
+        this.keyHeld_TurnLeft = false;
+        this.keyHeld_TurnRight = false;
 
-    // key controls used for this car 
-    this.setupControls = function(forwardKey, backKey, leftKey, rightKey) {
+        this.nitroCount = 0;
+    }
+
+    /**
+     * Key controls used for this car
+     * @param {number} forwardKey Keycode that will make the car go forward
+     * @param {number} backKey Keycode that will make the car go backward
+     * @param {number} leftKey Keycode that will make the car go left
+     * @param {number} rightKey Keycode that will make the car go right
+     */
+    setupControls(forwardKey, backKey, leftKey, rightKey) {
         this.controlKeyForGas = forwardKey;
         this.controlKeyForReverse = backKey;
         this.controlKeyForTurnLeft = leftKey;
         this.controlKeyForTurnRight = rightKey;
-    }
+    };
 
-    this.carInit = function(whichGraphic, whichName) {
+    init(whichGraphic, whichName) {
         this.myBitmap = whichGraphic;
         this.myName = whichName;
-        this.carReset();
+        this.reset();
     }
 
-    this.carReset = function() {
-        this.carSpeed = 0;
-        this.carAng = -0.5 * Math.PI;
-        if (this.homeX == undefined) {
-            for (var i = 0; i < trackGrid.length; i++) {
-                if (trackGrid[i] == TRACK_PLAYER) {
-                    var tileRow = Math.floor(i / TRACK_COLS);
-                    var tileCol = i % TRACK_COLS;
+    reset() {
+        this.speed = 0;
+        this.ang = -0.5 * Math.PI;
+        if (this.homeX === undefined) {
+            for (let i = 0; i < trackGrid.length; i++) {
+                if (trackGrid[i] === TRACK_PLAYER) {
+                    let tileRow = Math.floor(i / TRACK_COLS);
+                    let tileCol = i % TRACK_COLS;
                     this.homeX = tileCol * TRACK_W + 0.5 * TRACK_W;
                     this.homeY = tileRow * TRACK_H + 0.5 * TRACK_H;
                     trackGrid[i] = TRACK_ROAD;
@@ -48,77 +56,77 @@ function carClass() {
                 } // end of if
             } // end of for
         } // end of if car position not saved yet
-        this.carX = this.homeX;
-        this.carY = this.homeY;
+        this.x = this.homeX;
+        this.y = this.homeY;
         resetTime();
         this.hasNitro = true;
-    } // end of carReset
+    }; // end of carReset
 
-    this.carMove = function() {
+    move() {
         // only allow the car to turn while it's rolling
-        if (Math.abs(this.carSpeed) > MIN_TURN_SPEED) {
+        if (Math.abs(this.speed) > MIN_TURN_SPEED) {
             if (this.keyHeld_TurnLeft) {
-                this.carAng -= TURN_RATE * Math.PI;
+                this.ang -= TURN_RATE * Math.PI;
             }
 
             if (this.keyHeld_TurnRight) {
-                this.carAng += TURN_RATE * Math.PI;
+                this.ang += TURN_RATE * Math.PI;
             }
         }
 
         if (this.keyHeld_Gas) {
-            this.carSpeed += DRIVE_POWER;
+            this.speed += DRIVE_POWER;
         }
         if (this.keyHeld_Reverse) {
-            this.carSpeed -= REVERSE_POWER;
+            this.speed -= REVERSE_POWER;
         }
-		if ( this.nitroCount > 1)
-		{
-		  this.nitroCount--;
-		  this.carSpeed = this.nitroSpeed;
-		}
-		else if (this.nitroCount == 1) {
-			this.carSpeed = this.carSpeed/2;
-			this.nitroCount--;
-		}
-        var nextX = this.carX + Math.cos(this.carAng) * this.carSpeed;
-        var nextY = this.carY + Math.sin(this.carAng) * this.carSpeed;
+        if (this.nitroCount > 1) {
+            this.nitroCount--;
+            this.speed = this.nitroSpeed;
+        }
+        else if (this.nitroCount === 1) {
+            this.speed = this.speed / 2;
+            this.nitroCount--;
+        }
+        let nextX = this.x + Math.cos(this.ang) * this.speed;
+        let nextY = this.y + Math.sin(this.ang) * this.speed;
 
-        var drivingIntoTileType = getTrackAtPixelCoord(nextX, nextY);
-        isCarAtPixelCoord(this, this.carX, this.carY);
+        let drivingIntoTileType = getTrackAtPixelCoord(nextX, nextY);
+        isCarAtPixelCoord(this, this.x, this.y);
 
-        if (drivingIntoTileType == TRACK_ROAD) {
-            this.carX = nextX;
-            this.carY = nextY;
-        } else if (drivingIntoTileType == TRACK_GOAL) {
+        if (drivingIntoTileType === TRACK_ROAD) {
+            this.x = nextX;
+            this.y = nextY;
+        } else if (drivingIntoTileType === TRACK_GOAL) {
             document.getElementById("debugText").innerHTML = this.myName + " won the race";
-            p1.carReset();
-            p2.carReset();
-        } else if (drivingIntoTileType == TRACK_GRASS) {
-            this.carSpeed = this.carSpeed / 2;
-            this.carX = nextX;
-            this.carY = nextY;
-        } else if (drivingIntoTileType == TRACK_OIL) {
+            p1.reset();
+            p2.reset();
+        } else if (drivingIntoTileType === TRACK_GRASS) {
+            this.speed = this.speed / 2;
+            this.x = nextX;
+            this.y = nextY;
+        } else if (drivingIntoTileType === TRACK_OIL) {
             this.keyHeld_TurnLeft = false;
             this.keyHeld_TurnRight = false;
-            this.carX = nextX;
-            this.carY = nextY;
+            this.x = nextX;
+            this.y = nextY;
         } else {
-            this.carSpeed = 0.0;
+            this.speed = 0.0;
         }
 
-        this.carSpeed *= GROUNDSPEED_DECAY_MULT;
-    }
+        this.speed *= GROUNDSPEED_DECAY_MULT;
+    };
 
-    this.carDraw = function() {
-        drawBitmapCenteredAtLocationWithRotation(this.myBitmap, this.carX, this.carY, this.carAng);
-    }
-    this.nitro = function() {
-    	if (this.hasNitro) {
-    		this.nitroCount = NITRO_TIME;
-    		this.hasNitro = false;
-    		this.speedCopy = this.carSpeed;
-    		this.nitroSpeed = this.carSpeed * 2;
-    	}
-    }
+    draw() {
+        drawBitmapCenteredAtLocationWithRotation(this.myBitmap, this.x, this.y, this.ang);
+    };
+
+    nitro() {
+        if (this.hasNitro) {
+            this.nitroCount = NITRO_TIME;
+            this.hasNitro = false;
+            this.speedCopy = this.speed;
+            this.nitroSpeed = this.speed * 2;
+        }
+    };
 } // end of car class

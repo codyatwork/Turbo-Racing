@@ -3,7 +3,7 @@ const TRACK_W = 40;
 const TRACK_H = 40;
 const TRACK_COLS = 20;
 const TRACK_ROWS = 15;
-var trackGrid = [4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
+let trackGrid = [4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
     4, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,
     1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1,
@@ -27,15 +27,15 @@ const TRACK_TREE = 4;
 const TRACK_FLAG = 5;
 const TRACK_GRASS = 6;
 const TRACK_OIL = 7;
-var sunOut;
+let sunOut;
 
 function trackTileToIndex(tileCol, tileRow) {
     return (tileCol + TRACK_COLS * tileRow);
 }
 
 function getTrackAtPixelCoord(pixelX, pixelY) {
-    var tileCol = pixelX / TRACK_W;
-    var tileRow = pixelY / TRACK_H;
+    let tileCol = pixelX / TRACK_W;
+    let tileRow = pixelY / TRACK_H;
 
     // we'll use Math.floor to round down to the nearest whole number
     tileCol = Math.floor(tileCol);
@@ -47,25 +47,25 @@ function getTrackAtPixelCoord(pixelX, pixelY) {
         return TRACK_WALL; // avoid invalid array access, treat out of bounds as wall
     }
 
-    var trackIndex = trackTileToIndex(tileCol, tileRow);
+    let trackIndex = trackTileToIndex(tileCol, tileRow);
     return (trackGrid[trackIndex]);
 }
 
 function drawTracks() {
-    var trackIndex = 0;
-    var trackLeftEdgeX = 0;
-    var trackTopEdgeY = 0;
+    let trackIndex = 0;
+    let trackLeftEdgeX = 0;
+    let trackTopEdgeY = 0;
 
-    for (var eachRow = 0; eachRow < TRACK_ROWS; eachRow++) { // deal with one row at a time
+    for (let eachRow = 0; eachRow < TRACK_ROWS; eachRow++) { // deal with one row at a time
 
         trackLeftEdgeX = 0; // resetting horizontal draw position for tiles to left edge
 
-        for (var eachCol = 0; eachCol < TRACK_COLS; eachCol++) { // left to right in each row
+        for (let eachCol = 0; eachCol < TRACK_COLS; eachCol++) { // left to right in each row
 
-            var trackTypeHere = trackGrid[trackIndex]; // getting the track code for this tile        
+            let trackTypeHere = trackGrid[trackIndex]; // getting the track code for this tile        
             canvasContext.drawImage(trackPics[trackTypeHere], trackLeftEdgeX, trackTopEdgeY);
 
-            trackIndex++; // increment which index we're going to next check for in the track        
+            trackIndex++; // increment which index we're going to next check for in the track
             trackLeftEdgeX += TRACK_W; // jump horizontal draw position to next tile over by tile width
 
         } // end of for eachCol
