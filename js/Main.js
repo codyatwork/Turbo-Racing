@@ -6,13 +6,12 @@ let p2 = new Car();
 let firstTime = true;
 let speedBuffer = false;
 let computerCar = true;
-let startTime;
-let start_ms;
+let startTimestamp;
 const TICKS_PER_SECOND = 30;
 const SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 const MAX_FRAMESKIP = 5;
 let nextGameTick = 0;
-let loadTimestamp = new Date().getTime();
+let loadTimestamp = Date.now();
 window.onload = function () {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
@@ -21,7 +20,7 @@ window.onload = function () {
 }
 
 function getTickCount() {
-    return new Date().getTime() - loadTimestamp;
+    return Date.now() - loadTimestamp;
 }
 
 function renderFrame() {
@@ -57,11 +56,10 @@ function drawEverything(interpolation) {
     drawTracks();
     p1.draw(interpolation);
     p2.draw(interpolation);
-    let nowTime = new Date;
-    let now_ms = nowTime.getTime();
-    let difference_ms = now_ms - start_ms;
-    let minutes = pad(Math.floor(difference_ms / 60000), 2);
-    let seconds = pad(((difference_ms % 60000) / 1000).toFixed(1), 4);
+    let nowTimestamp = Date.now();
+    let differenceMs = nowTimestamp - startTimestamp;
+    let minutes = pad(Math.floor(differenceMs / 60000), 2);
+    let seconds = pad(((differenceMs % 60000) / 1000).toFixed(1), 4);
     let raceTime = minutes + ":" + seconds;
     canvasContext.font = "30px Verdana";
     canvasContext.fillStyle = 'blue';
@@ -111,6 +109,5 @@ function pad(num, size) {
 }
 
 function resetTime() {
-    startTime = new Date;
-    start_ms = startTime.getTime();
+    startTimestamp = Date.now();
 }
