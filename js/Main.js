@@ -8,6 +8,11 @@ let speedBuffer = false;
 let computerCar = true;
 let startTime;
 let start_ms;
+const TICKS_PER_SECOND = 30;
+const SKIP_TICKS = 1000 / TICKS_PER_SECOND;
+const MAX_FRAMESKIP = 5;
+let nextGameTick = 0;
+let loadTimestamp = new Date().getTime();
 window.onload = function () {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
@@ -15,9 +20,19 @@ window.onload = function () {
     loadDayImages();
 }
 
+function getTickCount() {
+    return new Date().getTime() - loadTimestamp;
+}
+
 function renderFrame() {
-    moveEverything();
-    drawEverything();
+    let loops = 0;
+    while (getTickCount() > nextGameTick && loops < MAX_FRAMESKIP) {
+        moveEverything();
+        nextGameTick += SKIP_TICKS;
+        loops++;
+    }
+    let interpolation = (getTickCount() + SKIP_TICKS - nextGameTick) / SKIP_TICKS;
+    drawEverything(interpolation);
     requestAnimationFrame(renderFrame);
 }
 
@@ -38,10 +53,10 @@ function moveEverything() {
     p2.move();
 }
 
-function drawEverything() {
+function drawEverything(interpolation) {
     drawTracks();
-    p1.draw();
-    p2.draw();
+    p1.draw(interpolation);
+    p2.draw(interpolation);
     let nowTime = new Date;
     let now_ms = nowTime.getTime();
     let difference_ms = now_ms - start_ms;

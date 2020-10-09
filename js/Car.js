@@ -117,8 +117,16 @@ class Car {
         this.speed *= GROUNDSPEED_DECAY_MULT;
     };
 
-    draw() {
-        drawBitmapCenteredAtLocationWithRotation(this.myBitmap, this.x, this.y, this.ang);
+    draw(interpolation) {
+        let drawAng = this.ang;
+        if (interpolation > 0 && Math.abs(this.speed) > MIN_TURN_SPEED) {
+            if (this.keyHeld_TurnLeft) {
+                drawAng -= TURN_RATE * Math.PI * interpolation;
+            } else if (this.keyHeld_TurnRight) {
+                drawAng += TURN_RATE * Math.PI * interpolation;
+            }
+        }
+        drawBitmapCenteredAtLocationWithRotation(this.myBitmap, this.x + Math.cos(this.ang) * this.speed * interpolation, this.y + Math.sin(this.ang) * this.speed * interpolation, drawAng);
     };
 
     nitro() {
